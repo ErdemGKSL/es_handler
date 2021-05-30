@@ -28,10 +28,8 @@ module.exports = {
     //* Yardım Komutu İçin İsim ve Açıklama
     /**
      * @param {Discord.Message} msg
-     * @param {Array} args
+     * @param {string[]} args
      * @param {Discord.Client} client
-     * @param {Object} u
-     * @param {Discord.MessageEmbed} u.embed
      */
     execute(msg, args, client) {
         const dping = msg.client.ws.ping;
