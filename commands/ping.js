@@ -4,14 +4,14 @@ module.exports = {
     trigger: "ping",
     //? Tetiklenme İçeriği
     type: "end",
-    //? Komutun Tetiklenme Tipi, Kullanılabilir: "regex" "contains" "end" "start" "exact" "command"
+    //? Komutun Tetiklenme Tipi, Kullanılabilir: "regex" "contains" "end" "start" "exact" "command" "always"
     aliases: ["p"],
     //? Eğer Tetiklenme tipi "command" ise ana komut dışındaki tetiklenmeler.
     guildOnly: false,
     //? Sadece Sunucularda'mı Çalışsın
     cooldown: {
         enable: true, //? true false
-        timeout: 10, //? SANİYE
+        timeout: 10, //? SANİYE | Seconds
         type: "user", //? "any", "guild", "user", "member"
         errormsg: "Bi dur la",
     },
