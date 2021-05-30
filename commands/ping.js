@@ -1,3 +1,5 @@
+const Discord = require("discord.js");
+
 module.exports = {
     trigger: "ping",
     //? Tetiklenme İçeriği
@@ -11,7 +13,7 @@ module.exports = {
         enable: true, //? true false
         timeout: 10, //? SANİYE
         type: "user", //? "any", "guild", "user", "member"
-        errormsg: "Bi dur mk",
+        errormsg: "Bi dur la",
     },
     //* Bekleme Süresi
     //* enable: Açıksa true Kapalı İse False
@@ -24,6 +26,13 @@ module.exports = {
         desc: "Botun ve discordun mevcut gecikmesini alır ve size iletir.",
     },
     //* Yardım Komutu İçin İsim ve Açıklama
+    /**
+     * @param {Discord.Message} msg
+     * @param {Array} args
+     * @param {Discord.Client} client
+     * @param {Object} u
+     * @param {Discord.MessageEmbed} u.embed
+     */
     execute(msg, args, client, u) {
         const dping = msg.client.ws.ping;
         let bping;
