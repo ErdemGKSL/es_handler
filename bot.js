@@ -11,18 +11,14 @@ const cooldown = new Set();
 client.commands = new Discord.Collection();
 client.dmcommands = new Discord.Collection();
 client.prefix = prefix;
-const eventFiles = fs
-    .readdirSync("./commands")
-    .filter((x) => x.endsWith(".js"));
+const eventFiles = fs.readdirSync("./events").filter((x) => x.endsWith(".js"));
 if (eventFiles.length > 0) {
     console.log(chalk.magenta.bold.underline("Eventler Yükleniyor...") + "\n ");
 }
 eventFiles.forEach((file) => {
-    const event = require(`./commands/${file}`);
-    event(client);
-    console.log(
-        chalk.blueBright.italic(`> ${file.replace(".js", "")} Eventi Yüklendi!`)
-    );
+    const event = require(`./events/${file}`);
+    event.execute(client);
+    console.log(chalk.blueBright.italic(`> ${event.name} Eventi Yüklendi!`));
 });
 
 const commandFiles = fs
