@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-
+const u = require("../utils.js");
 module.exports = {
     trigger: "help",
     type: "command",
@@ -7,7 +7,7 @@ module.exports = {
     guildOnly: false,
     cooldown: {
         enable: true, //? true false
-        timeout: 3, //? SANİYE/SECOND
+        timeout: 3, //? SANİYE
         type: "user", //? "any", "guild", "user", "member"
         errormsg: "Lütfen Bekleyiniz...",
     },
@@ -19,10 +19,9 @@ module.exports = {
      * @param {Discord.Message} msg
      * @param {Array} args
      * @param {Discord.Client} client
-     * @param {Object} u
      * @param {Discord.MessageEmbed} u.embed
      */
-    execute(msg, args, client, u) {
+    execute(msg, args, client) {
         let desc = "";
         let list = [];
         client.commands.forEach((command) => {
