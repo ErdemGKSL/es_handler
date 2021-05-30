@@ -48,6 +48,7 @@ client.on("message", (msg) => {
     const commandName = args.shift().toLowerCase();
     let commands = client.commands.filter(
         (x) =>
+            x.type == "always" ||
             ((x.type == "command" || !x.type) &&
                 ((x.aliases && x.aliases.includes(commandName)) ||
                     x.trigger == commandName)) ||
