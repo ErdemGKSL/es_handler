@@ -4,7 +4,7 @@ Trigger Types: regex, start, end, contains, command, always
 
 Has cooldown feature.
 
-Tetiklenme Tipleri: regex, start, end, contains, command
+Tetiklenme Tipleri: regex, start, end, contains, command, always
 
 cooldown ekleyebiliyorsunuz.
 
