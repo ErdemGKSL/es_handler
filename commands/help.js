@@ -7,7 +7,7 @@ module.exports = {
     guildOnly: false,
     cooldown: {
         enable: true, //? true false
-        timeout: 3, //? SANİYE
+        timeout: 3, //? SANİYE | Seconds
         type: "user", //? "any", "guild", "user", "member"
         errormsg: "Lütfen Bekleyiniz...",
     },
@@ -17,9 +17,8 @@ module.exports = {
     },
     /**
      * @param {Discord.Message} msg
-     * @param {Array} args
+     * @param {string[]} args
      * @param {Discord.Client} client
-     * @param {Discord.MessageEmbed} u.embed
      */
     execute(msg, args, client) {
         let desc = "";
