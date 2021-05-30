@@ -1,9 +1,9 @@
 const Discord = require("discord.js");
-
+const u = require("../utils.js");
 module.exports = {
     trigger: "ping",
     //? Tetiklenme İçeriği
-    type: "command",
+    type: "end",
     //? Komutun Tetiklenme Tipi, Kullanılabilir: "regex" "contains" "end" "start" "exact" "command"
     aliases: ["p"],
     //? Eğer Tetiklenme tipi "command" ise ana komut dışındaki tetiklenmeler.
@@ -33,7 +33,7 @@ module.exports = {
      * @param {Object} u
      * @param {Discord.MessageEmbed} u.embed
      */
-    execute(msg, args, client, u) {
+    execute(msg, args, client) {
         const dping = msg.client.ws.ping;
         let bping;
         msg.channel
