@@ -76,6 +76,10 @@ module.exports = {
      * @param {String} embed.color
      * @param {String} embed.thumb
      * @param {String} embed.image
+     * @param {Object} embed.footer
+     * @param {String} embed.footer.icon
+     * @param {String} embed.footer.text
+     * @param {Number|Date} embed.time
      * @param {Array[]} embed.field
      * @returns {Discord.MessageEmbed}
      */
@@ -86,6 +90,9 @@ module.exports = {
             .setDescription(embed.desc ? embed.desc : "Açıklama");
         if (embed.thumb) embed2.setThumbnail(embed.thumb);
         if (embed.image) embed2.setImage(embed.image);
+        if (embed.footer)
+            embed2.setFooter(embed.footer.text || "", embed.footer.icon || "");
+        if (embed.time) embed2.setTimestamp(embed.time);
         if (embed.field) {
             embed.field.forEach((x) => {
                 embed2.addField(x[0], x[1], x[2]);
