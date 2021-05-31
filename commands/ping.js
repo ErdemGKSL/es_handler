@@ -43,12 +43,14 @@ module.exports = {
             )
             .then((x) => {
                 bping = x.createdTimestamp - msg.createdTimestamp;
-                x.edit(
-                    u.embed({
-                        title: "Gecikme Ölçümü",
-                        desc: `Discord'un Pingi: ${dping} ms\nBot'un Pingi: ${bping} ms`,
-                    })
-                );
+                setTimeout(() => {
+                    x.edit(
+                        u.embed({
+                            title: "Gecikme Ölçümü",
+                            desc: `Discord'un Pingi: ${dping} ms\nBot'un Pingi: ${bping} ms`,
+                        })
+                    );
+                }, 500);
             });
     },
 };
