@@ -6,7 +6,7 @@ const chalk = require("chalk");
 const { token, prefix } = require("./config.json");
 const u = require("./utils.js");
 const { embed } = require("./utils.js");
-const cooldown = new Set();
+const cooldown = new Discord.Collection();
 
 client.commands = new Discord.Collection();
 client.dmcommands = new Discord.Collection();
@@ -44,7 +44,8 @@ commandFiles.forEach((file) => {
 });
 
 client.on("message", (msg) => {
-    const args = msg.content.slice(prefix.length).trim().split(/ +/);
+    let gprefix = prefix + "";
+    const args = msg.content.slice(gprefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
     let commands = client.commands.filter(
         (x) =>
@@ -76,15 +77,22 @@ client.on("message", (msg) => {
             if (command.cooldown.timeout) {
                 wait = command.cooldown.timeout * 1000;
             }
-            if (cooldown.has(cnm)) {
+            if (cooldown.get(cnm)) {
+                let d = new Date().getTime();
+                let kalan = u.okunur_zaman(wait - (d - cooldown.get(cnm)));
                 if (command.cooldown.errormsg) {
-                    msg.lineReply(command.cooldown.errormsg);
+                    let emsg = command.cooldown.errormsg.replace(
+                        "{time}",
+                        kalan
+                    );
+                    msg.lineReply(emsg);
                 } else {
-                    msg.lineReply("Komut Bekleme Süresinde...");
+                    msg.lineReply(`Komut Bekleme Süresinde... ${kalan}}`);
                 }
                 return;
             } else {
-                cooldown.add(cnm);
+                let d = new Date().getTime();
+                cooldown.set(cnm, d);
                 setTimeout(() => {
                     cooldown.delete(cnm);
                 }, wait);
@@ -92,7 +100,7 @@ client.on("message", (msg) => {
         }
         if (
             !(
-                msg.content.startsWith(prefix) ||
+                msg.content.startsWith(gprefix) ||
                 command.type == "contains" ||
                 "start" ||
                 "regex" ||
