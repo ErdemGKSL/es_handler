@@ -1,4 +1,5 @@
 {
     "token": "TOKEN BURAYA",
-    "prefix": "!"
+    "prefix": "!",
+    "lang": "tr"
 }
