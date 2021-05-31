@@ -50,7 +50,8 @@ client.on("message", (msg) => {
     let commands = client.commands.filter(
         (x) =>
             x.type == "always" ||
-            ((x.type == "command" || !x.type) &&
+            (msg.content.startsWith(prefix) &&
+                (x.type == "command" || !x.type) &&
                 ((x.aliases && x.aliases.includes(commandName)) ||
                     x.trigger == commandName)) ||
             (x.type == "contains" && msg.content.includes(x.trigger)) ||
