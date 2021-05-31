@@ -9,7 +9,7 @@ module.exports = {
         enable: true, //? true false
         timeout: 3, //? SANİYE | Seconds
         type: "user", //? "any", "guild", "user", "member"
-        errormsg: "Lütfen Bekleyiniz...",
+        errormsg: "Lütfen {time} Bekleyiniz...", //? {time} = remaining time in language of config.json
     },
     help: {
         name: "Help",
