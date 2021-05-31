@@ -24,7 +24,7 @@ module.exports = {
         let desc = "";
         let list = [];
         client.commands.forEach((command) => {
-            if (command.help) {
+            if (command.type == "command") {
                 list.push(command.help.name.toLowerCase());
             }
         });
