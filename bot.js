@@ -41,21 +41,22 @@ commandFiles.forEach((file) => {
 });
 
 client.on("message", (msg) => {
+    let content = msg.content.toLowerCase();
     let gprefix = prefix + "";
     const args = msg.content.slice(gprefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
     let commands = client.commands.filter(
         (x) =>
             x.type == "always" ||
-            (msg.content.startsWith(prefix) &&
+            (content.startsWith(prefix) &&
                 (x.type == "command" || !x.type) &&
                 ((x.aliases && x.aliases.includes(commandName)) ||
                     x.trigger == commandName)) ||
-            (x.type == "contains" && msg.content.includes(x.trigger)) ||
-            (x.type == "start" && msg.content.startsWith(x.trigger)) ||
-            (x.type == "end" && msg.content.endsWith(x.trigger)) ||
-            (x.type == "exact" && msg.content == x.trigger) ||
-            (x.type == "regex" && msg.content.match(new RegExp(x.trigger, "i")))
+            (x.type == "contains" && content.includes(x.trigger)) ||
+            (x.type == "start" && content.startsWith(x.trigger)) ||
+            (x.type == "end" && content.endsWith(x.trigger)) ||
+            (x.type == "exact" && content == x.trigger) ||
+            (x.type == "regex" && content.match(new RegExp(x.trigger, "i")))
     );
     if (!commands) return;
     commands.forEach((command) => {
@@ -79,13 +80,15 @@ client.on("message", (msg) => {
                 let d = new Date().getTime();
                 let kalan = u.okunur_zaman(wait - (d - cooldown.get(cnm)));
                 if (command.cooldown.errormsg) {
-                    let emsg = command.cooldown.errormsg.replace(
-                        "{time}",
-                        kalan
-                    );
-                    msg.lineReply(emsg);
-                } else {
-                    msg.lineReply(`Komut Bekleme Süresinde... ${kalan}}`);
+                    if (command.cooldown.errormsg == "" || "default") {
+                        msg.lineReply(`Komut Bekleme Süresinde... ${kalan}}`);
+                    } else {
+                        let emsg = command.cooldown.errormsg.replace(
+                            "{time}",
+                            kalan
+                        );
+                        msg.lineReply(emsg);
+                    }
                 }
                 return;
             } else {
