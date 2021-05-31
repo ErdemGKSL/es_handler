@@ -106,13 +106,18 @@ module.exports = {
      * @param {Number|Date} time
      * @returns {String}
      */
-    zaman(time) {
+    okunur_zaman(time) {
         let r = "k";
         if (typeof time == "date") {
             r = time.getTime();
         } else {
             r = time + 0;
         }
-        return dur(r, { language: lang });
+        return dur(r, {
+            language: lang,
+            round: true,
+            conjunction: " ve ",
+            serialComma: false,
+        });
     },
 };
