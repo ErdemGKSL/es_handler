@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
-
+const dur = require("humanize-duration");
+const { lang } = require("./config.json");
 module.exports = {
     arr: {
         /**
@@ -100,5 +101,18 @@ module.exports = {
         }
 
         return embed2;
+    },
+    /**
+     * @param {Number|Date} time
+     * @returns {String}
+     */
+    zaman(time) {
+        let r = "k";
+        if (typeof time == "date") {
+            r = time.getTime();
+        } else {
+            r = time + 0;
+        }
+        return dur(r, { language: lang });
     },
 };
