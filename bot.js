@@ -15,15 +15,12 @@ const eventFiles = fs.readdirSync("./events").filter((x) => x.endsWith(".js"));
 if (eventFiles.length > 0) {
     console.log(chalk.magenta.bold.underline("Eventler Yükleniyor...") + "\n ");
 }
-
+eventFiles.forEach((file) => {
+    const event = require(`./events/${file}`);
+    event.execute(client);
+    console.log(chalk.blueBright.italic(`> ${event.name} Eventi Yüklendi!`));
+});
 client.on("ready", () => {
-    eventFiles.forEach((file) => {
-        const event = require(`./events/${file}`);
-        event.execute(client);
-        console.log(
-            chalk.blueBright.italic(`> ${event.name} Eventi Yüklendi!`)
-        );
-    });
     console.log(
         chalk.green.bold(`${client.user.tag} adlı bota giriş yapıldı!`)
     );
