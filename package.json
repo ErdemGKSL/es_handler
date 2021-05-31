@@ -1,7 +1,7 @@
 {
-    "name": "e-start",
-    "version": "0.0.1",
-    "description": "Notin",
+    "name": "es-handler",
+    "version": "1.14.9",
+    "description": "Professional Handler",
     "main": "bot.js",
     "scripts": {
         "test": "node bot.js"
@@ -12,6 +12,7 @@
         "chalk": "^4.1.1",
         "discord-reply": "^0.1.2",
         "discord.js": "^12.5.3",
-        "fs": "0.0.1-security"
+        "fs": "0.0.1-security",
+        "humanize-duration": "^3.26.0"
     }
 }
