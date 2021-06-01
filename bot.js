@@ -81,7 +81,7 @@ client.on("message", (msg) => {
                 let d = new Date().getTime();
                 let kalan = u.okunur_zaman(wait - (d - cooldown.get(cnm)));
                 if (command.cooldown.errormsg) {
-                    if (command.cooldown.errormsg == "" || "default") {
+                    if (command.cooldown.errormsg === "") {
                         msg.lineReply(`Komut Bekleme Süresinde... ${kalan}}`);
                     } else {
                         let emsg = command.cooldown.errormsg.replace(
