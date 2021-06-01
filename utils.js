@@ -69,6 +69,10 @@ module.exports = {
             let m = max + 1;
             return Math.floor(Math.random() * (m - min)) + min;
         },
+        randColor() {
+            var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+            return `#${randomColor}`;
+        },
     },
     /**
      * @param {Object} embed
@@ -86,7 +90,7 @@ module.exports = {
      */
     embed(embed) {
         const embed2 = new Discord.MessageEmbed()
-            .setColor(embed.color ? embed.color : "#0099ff")
+            .setColor(embed.color ? embed.color : this.misc.randColor())
             .setTitle(embed.title ? embed.title : "")
             .setDescription(embed.desc ? embed.desc : "Açıklama");
         if (embed.thumb) embed2.setThumbnail(embed.thumb);
