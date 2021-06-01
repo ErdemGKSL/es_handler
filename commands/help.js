@@ -5,6 +5,7 @@ module.exports = {
     type: "command",
     aliases: ["yardım"],
     guildOnly: false,
+    ignoreBots: true, //?Botlar umursanmasın mı
     cooldown: {
         enable: true, //? true false
         timeout: 3, //? SANİYE | Seconds
