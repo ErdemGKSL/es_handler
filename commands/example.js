@@ -10,6 +10,15 @@ module.exports = {
     guildOnly: true,
     //? Sadece Sunucularda'mı Çalışsın
     ignoreBots: true, //?Botlar umursanmasın mı
+    /**
+     * * 0: Herkes
+     * * 1: Alt Yetkililer (Mesajları yönet vb.)
+     * * 2: Orta Yetkililer (Kanalları veya Rolleri yönet vb.)
+     * * 3: Üst Yetkililer (BAN veya KICK)
+     * * 4: Yöneticiler (ADMINSTRATORS)
+     * * 5: Botun Sahipleri (config.json)
+     */
+    permLevel: 0,
     cooldown: {
         enable: true, //? true false
         timeout: 90, //? SANİYE | Seconds
