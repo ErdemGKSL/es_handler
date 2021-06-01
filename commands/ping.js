@@ -9,6 +9,7 @@ module.exports = {
     //? Eğer Tetiklenme tipi "command" ise ana komut dışındaki tetiklenmeler.
     guildOnly: false,
     //? Sadece Sunucularda'mı Çalışsın
+    ignoreBots: true,
     cooldown: {
         enable: true, //? true false
         timeout: 90, //? SANİYE | Seconds
