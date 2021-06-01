@@ -92,7 +92,7 @@ module.exports = {
         const embed2 = new Discord.MessageEmbed()
             .setColor(embed.color ? embed.color : this.misc.randColor())
             .setTitle(embed.title ? embed.title : "")
-            .setDescription(embed.desc ? embed.desc : "Açıklama");
+            .setDescription(embed.desc ? embed.desc : "** **");
         if (embed.thumb) embed2.setThumbnail(embed.thumb);
         if (embed.image) embed2.setImage(embed.image);
         if (embed.footer)
