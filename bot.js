@@ -63,7 +63,7 @@ client.on("message", (msg) => {
     commands.forEach((command) => {
         if (command.guildOnly && msg.channel.type == "dm")
             return msg.lineReply("Bu komut sadece sunucularda çalışır!");
-        if (command.guildOnly &&command.permLevel) {
+        if (command.guildOnly && command.permLevel) {
             let permlvl = 0;
             if (
                 msg.member.hasPermission(
@@ -74,9 +74,9 @@ client.on("message", (msg) => {
             if (msg.member.hasPermission("MANAGE_CHANNELS" || "MANAGE_ROLES"))
                 permlvl = 2;
             if (msg.member.hasPermission("BAN_MEMBERS" || "KICK_MEMBERS"))
-                permlvl = 4;
-            if (msg.member.hasPermission("ADMINISTRATOR")) permlvl = 5;
-            if (owners.includes(msg.author.id)) permlvl = 6;
+                permlvl = 3;
+            if (msg.member.hasPermission("ADMINISTRATOR")) permlvl = 4;
+            if (owners.includes(msg.author.id)) permlvl = 5;
             if (command.permLevel > permlvl)
                 return msg.lineReply("Yetersiz Yetki!");
         }
@@ -99,7 +99,7 @@ client.on("message", (msg) => {
                 let kalan = u.okunur_zaman(wait - (d - cooldown.get(cnm)));
                 if (command.cooldown.errormsg) {
                     if (command.cooldown.errormsg === "") {
-                        msg.lineReply(`Komut Bekleme Süresinde... ${kalan}}`);
+                        msg.lineReply(`Komut Bekleme Süresinde... ${kalan}`);
                     } else {
                         let emsg = command.cooldown.errormsg.replace(
                             "{time}",
