@@ -23,8 +23,8 @@ module.exports = {
     //! guildOnly kapalı ise "guild" ve "member" çalışmaz!!!!
     //* errormsg: Hata Mesajı, {time} yazdığınız yere kalan bekleme süresi gelmektedir.
     help: {
-        name: "Ping",
-        desc: "Botun ve discordun mevcut gecikmesini alır ve size iletir.",
+        name: "Example",
+        desc: "example description",
     },
     //* Yardım Komutu İçin İsim ve Açıklama
     /**
