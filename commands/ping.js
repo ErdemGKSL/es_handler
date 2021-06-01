@@ -3,7 +3,7 @@ const u = require("../utils.js");
 module.exports = {
     trigger: "ping",
     //? Tetiklenme İçeriği
-    type: "end",
+    type: "command",
     //? Komutun Tetiklenme Tipi, Kullanılabilir: "regex" "contains" "end" "start" "exact" "command" "always"
     aliases: ["p"],
     //? Eğer Tetiklenme tipi "command" ise ana komut dışındaki tetiklenmeler.
