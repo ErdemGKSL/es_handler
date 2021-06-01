@@ -41,6 +41,7 @@ commandFiles.forEach((file) => {
 });
 
 client.on("message", (msg) => {
+    if (client.user.id == msg.author.id) return;
     let content = msg.content.toLowerCase();
     let gprefix = prefix + "";
     const args = msg.content.slice(gprefix.length).trim().split(/ +/);
@@ -110,6 +111,7 @@ client.on("message", (msg) => {
             )
         )
             return;
+        if (command.ignoreBots && msg.author.bot) return;
         try {
             command.execute(msg, args, client);
         } catch (e) {
