@@ -63,7 +63,7 @@ client.on("message", (msg) => {
     commands.forEach((command) => {
         if (command.guildOnly && msg.channel.type == "dm")
             return msg.lineReply("Bu komut sadece sunucularda çalışır!");
-        if (command.permLevel) {
+        if (command.guildOnly &&command.permLevel) {
             let permlvl = 0;
             if (
                 msg.member.hasPermission(
