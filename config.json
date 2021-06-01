@@ -1,5 +1,6 @@
 {
     "token": "TOKEN BURAYA",
     "prefix": "!",
-    "lang": "tr"
+    "lang": "tr",
+    "owners": ["357583948273849501", "967463527811985090"]
 }
