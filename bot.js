@@ -3,7 +3,7 @@ require("discord-reply");
 const client = new Discord.Client();
 const fs = require("fs");
 const chalk = require("chalk");
-const { token, prefix } = require("./config.json");
+const { token, prefix, owners } = require("./config.json");
 const u = require("./utils.js");
 const { embed } = require("./utils.js");
 const cooldown = new Discord.Collection();
@@ -63,6 +63,23 @@ client.on("message", (msg) => {
     commands.forEach((command) => {
         if (command.guildOnly && msg.channel.type == "dm")
             return msg.lineReply("Bu komut sadece sunucularda çalışır!");
+        if (command.permLevel) {
+            let permlvl = 0;
+            if (
+                msg.member.hasPermission(
+                    "MANAGE_EMOJIS" || "MANAGE_MESSAGES" || "MANAGE_NICKNAMES"
+                )
+            )
+                permlvl = 1;
+            if (msg.member.hasPermission("MANAGE_CHANNELS" || "MANAGE_ROLES"))
+                permlvl = 2;
+            if (msg.member.hasPermission("BAN_MEMBERS" || "KICK_MEMBERS"))
+                permlvl = 4;
+            if (msg.member.hasPermission("ADMINISTRATOR")) permlvl = 5;
+            if (owners.includes(msg.author.id)) permlvl = 6;
+            if (command.permLevel > permlvl)
+                return msg.lineReply("Yetersiz Yetki!");
+        }
         if (command.cooldown && command.cooldown.enable) {
             let cnm = command.trigger + msg.author.id;
             let type = command.cooldown.type;
@@ -81,7 +98,7 @@ client.on("message", (msg) => {
                 let d = new Date().getTime();
                 let kalan = u.okunur_zaman(wait - (d - cooldown.get(cnm)));
                 if (command.cooldown.errormsg) {
-                    if (command.cooldown.errormsg === "") {
+                    if (command.cooldown.errormsg == "" || "default") {
                         msg.lineReply(`Komut Bekleme Süresinde... ${kalan}}`);
                     } else {
                         let emsg = command.cooldown.errormsg.replace(
