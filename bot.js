@@ -61,9 +61,17 @@ client.on("message", (msg) => {
     );
     if (!commands) return;
     commands.forEach((command) => {
-        if (command.guildOnly && msg.channel.type == "dm")
-            return msg.lineReply("Bu komut sadece sunucularda çalışır!");
-        if (command.guildOnly && command.permLevel) {
+        if (command.workOnly) {
+            if (command.workOnly.toLowerCase() == "dm" && msg.guild)
+                return msg.lineReply(
+                    "Bu komut sadece DM'lerde kullanılmaz üzere tasarlanmıştır!"
+                );
+            if (command.workOnly.toLowerCase() == "guild" && !msg.guild)
+                return msg.lineReply(
+                    "Bu komut sadece sunucularda kullanılabilir!"
+                );
+        }
+        if (command.workOnly.toLowerCase() == "guild" && command.permLevel) {
             let permlvl = 0;
             if (
                 msg.member.hasPermission(
@@ -84,11 +92,14 @@ client.on("message", (msg) => {
             let cnm = command.trigger + msg.author.id;
             let type = command.cooldown.type;
             let wait = 10000;
-            if (type == "member" && command.guildOnly) {
+            if (type == "member" && command.workOnly.toLowerCase() == "guild") {
                 cnm = command.trigger + msg.author.id + msg.guild.id;
             } else if (type == "any") {
                 cnm = command.trigger;
-            } else if (type == "guild" && command.guildOnly) {
+            } else if (
+                type == "guild" &&
+                command.workOnly.toLowerCase() == "guild"
+            ) {
                 cnm = command.trigger + msg.guild.id;
             }
             if (command.cooldown.timeout) {
