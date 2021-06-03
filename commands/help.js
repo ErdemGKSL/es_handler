@@ -4,7 +4,7 @@ module.exports = {
     trigger: "help",
     type: "command",
     aliases: ["yardım"],
-    guildOnly: false,
+    workOnly: "all", //? "guild" , "dm" , "all"
     ignoreBots: true, //?Botlar umursanmasın mı
     /**
      * * 0: Herkes
