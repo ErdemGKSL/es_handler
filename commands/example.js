@@ -7,7 +7,7 @@ module.exports = {
     //? Komutun Tetiklenme Tipi, Kullanılabilir: "regex" "contains" "end" "start" "exact" "command" "always"
     aliases: ["e1", "e2"],
     //? Eğer Tetiklenme tipi "command" ise ana komut dışındaki tetiklenmeler.
-    guildOnly: true,
+    workOnly: "all", //? "guild" , "dm" , "all"
     //? Sadece Sunucularda'mı Çalışsın
     ignoreBots: true, //?Botlar umursanmasın mı
     /**
