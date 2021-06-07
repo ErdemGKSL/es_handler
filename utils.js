@@ -75,6 +75,34 @@ module.exports = {
         },
     },
     /**
+     * @param {Number|Date} dat
+     * @returns {Object}
+     */
+    ms(dat) {
+        const diffTime = Math.abs(dat);
+        const diffYear = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30 * 12));
+        const rawMonth = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30));
+        const diffMonth = rawMonth - diffYear * 12;
+        const rawDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const diffDays = rawDays - rawMonth * 30;
+        const rawHours = Math.floor(diffTime / (1000 * 60 * 60));
+        const diffHours = rawHours - rawDays * 24;
+        const rawMinutes = Math.floor(diffTime / (1000 * 60));
+        const rawSec = Math.floor(diffTime / 1000);
+        const diffMins = Math.floor(diffTime / 60000) - rawHours * 60;
+        const diffSec = Math.floor(diffTime / 1000) - rawMinutes * 60;
+        const diffMsec = Math.floor(diffTime) - rawSec * 1000;
+        return {
+            years: diffYear,
+            months: diffMonth,
+            days: diffDays,
+            hours: diffHours,
+            minutes: diffMins,
+            seconds: diffSec,
+            milliseconds: diffMsec,
+        };
+    },
+    /**
      * @param {Object} embed
      * @param {String} embed.title
      * @param {String} embed.desc
