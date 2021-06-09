@@ -25,7 +25,6 @@ client.on("ready", () => {
         chalk.green.bold(`${client.user.tag} adlı bota giriş yapıldı!`)
     );
 });
-
 const commandFiles = fs
     .readdirSync("./commands")
     .filter((x) => x.endsWith(".js"));
@@ -34,10 +33,9 @@ if (commandFiles.length > 0) {
 }
 commandFiles.forEach((file) => {
     const command = require(`./commands/${file}`);
-    client.commands.set(command.trigger, command);
-    console.log(
-        chalk.blueBright.italic(`> ${command.trigger} Komutu Yüklendi!`)
-    );
+    let name = file.slice(0, file.length - 3);
+    client.commands.set(name, command);
+    console.log(chalk.blueBright.italic(`> ${name} Komutu Yüklendi!`));
 });
 
 client.on("message", (msg) => {
