@@ -32,9 +32,7 @@ const incommandFiles = fs
 const commandFiles = fs
     .readdirSync("./commands")
     .filter((x) => x.endsWith(".js"));
-if (commandFiles.length > 0) {
-    console.log(chalk.magenta.bold.underline("Komutlar Yükleniyor...") + "\n ");
-}
+
 incommandFiles.forEach((folder) => {
     const lcommandFiles = fs
         .readdirSync(`./commands/${folder}`)
@@ -53,6 +51,9 @@ incommandFiles.forEach((folder) => {
         console.log(chalk.blueBright.italic(`> ${name} Komutu Yüklendi!`));
     });
 });
+if (commandFiles.length > 0) {
+    console.log(chalk.magenta.bold.underline("Komutlar Yükleniyor...") + "\n ");
+}
 commandFiles.forEach((file) => {
     const command = require(`./commands/${file}`);
     let name = file.slice(0, file.length - 3);
