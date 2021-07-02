@@ -25,12 +25,35 @@ client.on("ready", () => {
         chalk.green.bold(`${client.user.tag} adlı bota giriş yapıldı!`)
     );
 });
+const incommandFiles = fs
+    .readdirSync("./commands")
+    .filter((x) => !x.includes("."));
+
+
 const commandFiles = fs
     .readdirSync("./commands")
     .filter((x) => x.endsWith(".js"));
 if (commandFiles.length > 0) {
     console.log(chalk.magenta.bold.underline("Komutlar Yükleniyor...") + "\n ");
 }
+incommandFiles.forEach((folder) => {
+    const lcommandFiles = fs
+        .readdirSync(`./commands/${folder}`)
+        .filter((x) => x.endsWith(".js"));
+    if (lcommandFiles.length > 0) {
+    console.log(chalk.magenta.bold.underline(`${folder} Dosyasından Komutlar Yükleniyor...`) + "\n ");
+}
+    lcommandFiles.forEach((file) => {
+        const command = require(`./commands/${file}`);
+        let name = file.slice(0, file.length - 3);
+        client.commands.set(name, command);
+        console.log(
+            chalk.blueBright.italic(
+                `> ${name} Komutu Yüklendi!`
+            )
+        );
+    });
+});
 commandFiles.forEach((file) => {
     const command = require(`./commands/${file}`);
     let name = file.slice(0, file.length - 3);
