@@ -4,26 +4,18 @@ module.exports = {
     trigger: "help",
     type: "command",
     aliases: ["yardım"],
-    workOnly: "all", //? "guild" , "dm" , "all"
-    ignoreBots: true, //?Botlar umursanmasın mı
-    /**
-     * * 0: Herkes
-     * * 1: Alt Yetkililer (Mesajları yönet vb.)
-     * * 2: Orta Yetkililer (Kanalları veya Rolleri yönet vb.)
-     * * 3: Üst Yetkililer (BAN veya KICK)
-     * * 4: Yöneticiler (ADMINSTRATORS)
-     * * 5: Botun Sahipleri (config.json)
-     */
+    workOnly: "all", 
+    ignoreBots: true, 
     permLevel: 0,
     cooldown: {
         enable: true, //? true false
-        timeout: 3, //? SANİYE | Seconds
+        timeout: 3, //?  Seconds
         type: "user", //? "any", "guild", "user", "member"
-        errormsg: "Lütfen {time} Bekleyiniz...", //? {time} = remaining time in language of config.json
+        errormsg: "You should wait {time}...", //?
     },
     help: {
         name: "Help",
-        desc: "Kullandığınız Komut :P",
+        desc: "The command that you used :P",
     },
     /**
      * @param {Discord.Message} msg
@@ -46,8 +38,8 @@ module.exports = {
             if (command) {
                 msg.channel.send(
                     u.embed({
-                        title: "・Yardım!",
-                        desc: "__**Komut**__",
+                        title: "・Help!",
+                        desc: "__**Command**__",
                         field: [
                             [
                                 client.prefix + command.help.name,
@@ -58,17 +50,17 @@ module.exports = {
                 );
                 return;
             } else {
-                desc = "**・Aradığınız komut bulunamadı...**";
-                desc += "\n・Komut Listesi: *" + list.join(", ") + "*";
+                desc = "**・I couldnt found the command you was looking for...**";
+                desc += "\n・Command List: *" + list.join(", ") + "*";
             }
         } else {
             desc =
                 "・" +
                 client.prefix +
-                "help <Komut>\n\n・Komut Listesi: \n\n**・" +
+                "help <Komut>\n\n・Command List: \n\n**・" +
                 list.join("\n・") +
                 "**";
         }
-        msg.channel.send(u.embed({ title: "・Yardım!", desc: desc }));
+        msg.channel.send(u.embed({ title: "・Help!", desc: desc }));
     },
 };
