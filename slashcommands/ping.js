@@ -7,9 +7,9 @@ module.exports = {
 	//? Açıklama
 	options: [
 		{
+			type: 4, // 4 = Sayı demek
 			name: "embed",
 			description: "embedli mi olsun?",
-			type: 4, // 4 = Sayı demek
 			required: true,
 			choices: [
 				{
