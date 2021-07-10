@@ -1,5 +1,6 @@
 {
     "token": "TOKEN BURAYA",
+    "bot_id": "Botun Client ID'si",
     "prefix": "!",
     "lang": "tr",
     "owners": ["357583948273849501", "967463527811985090"]
