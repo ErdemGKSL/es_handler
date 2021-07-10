@@ -14,16 +14,17 @@ client.commands = new Discord.Collection();
 client.prefix = prefix;
 const eventFiles = fs.readdirSync("./events").filter((x) => x.endsWith(".js"));
 if (eventFiles.length > 0) {
-	console.log(chalk.magenta.bold.underline("Eventler Yükleniyor...") + "\n ");
+	console.log(chalk.magenta.bold.underline("Events loading...") + "\n ");
 }
+
 eventFiles.forEach((file) => {
 	const event = require(`./events/${file}`);
 	event.execute(client);
-	console.log(chalk.blueBright.italic(`> ${event.name} Eventi Yüklendi!`));
+	console.log(chalk.blueBright.italic(`> ${event.name} named Event loaded!`));
 });
 client.on("ready", () => {
 	console.log(
-		chalk.green.bold(`${client.user.tag} adlı bota giriş yapıldı!`)
+		chalk.green.bold(`Logged as ${client.user.tag}!`)
 	);
 });
 const incommandFiles = fs
@@ -41,7 +42,7 @@ incommandFiles.forEach((folder) => {
 	if (lcommandFiles.length > 0) {
 		console.log(
 			chalk.magenta.bold.underline(
-				`${folder} Dosyasından Komutlar Yükleniyor...`
+				`Loading commands from ${folder} folder...`
 			) + "\n "
 		);
 	}
@@ -49,7 +50,7 @@ incommandFiles.forEach((folder) => {
 		const command = require(`./commands/${folder}/${file}`);
 		let name = file.slice(0, file.length - 3);
 		client.commands.set(name, command);
-		console.log(chalk.blueBright.italic(`> ${name} Komutu Yüklendi!`));
+		console.log(chalk.blueBright.italic(`> ${name} named command Loaded!`));
 	});
 });
 
@@ -364,4 +365,52 @@ client.on("message", (msg) => {
 		}
 	});
 });
+
 client.login(token);
+
+
+function respond(i, msg, id) {
+	if (id) {
+		if (typeof msg === "string") {
+			client.api.interactions(i.id, i.token).callback.post({
+				data: {
+					type: 4,
+					data: {
+						content: msg,
+						flags: id
+					}
+				}
+			});
+		} else if (msg) {
+			client.api.interactions(i.id, i.token).callback.post({
+				data: {
+					type: 4,
+					data: {
+						embeds: [msg],
+						flags: id
+					}
+				}
+			});
+		}
+	} else {
+		if (typeof msg === "string") {
+			client.api.interactions(i.id, i.token).callback.post({
+				data: {
+					type: 4,
+					data: {
+						content: msg
+					}
+				}
+			});
+		} else if (msg) {
+			client.api.interactions(i.id, i.token).callback.post({
+				data: {
+					type: 4,
+					data: {
+						embeds: [msg]
+					}
+				}
+			});
+		}
+	}
+}
