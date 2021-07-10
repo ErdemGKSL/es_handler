@@ -2,35 +2,28 @@ const Discord = require("discord.js");
 const u = require("../utils.js");
 module.exports = {
     trigger: "example",
-    //? Tetiklenme İçeriği
+    //? Trigger
     type: "command",
-    //? Komutun Tetiklenme Tipi, Kullanılabilir: "regex" "contains" "end" "start" "exact" "command" "always"
+    //? Trigger Type, Use "regex", "contains", "end", "start", "exact", "command" or "always"
     aliases: ["e1", "e2"],
-    //? Eğer Tetiklenme tipi "command" ise ana komut dışındaki tetiklenmeler.
+    //? If trigger type is command aliases works.
     workOnly: "all", //? "guild" , "dm" , "all"
-    //? Sadece Sunucularda'mı Çalışsın
-    ignoreBots: true, //?Botlar umursanmasın mı
+    ignoreBots: true,
     /**
-     * * 0: Herkes
-     * * 1: Alt Yetkililer (Mesajları yönet vb.)
-     * * 2: Orta Yetkililer (Kanalları veya Rolleri yönet vb.)
-     * * 3: Üst Yetkililer (BAN veya KICK)
-     * * 4: Yöneticiler (ADMINSTRATORS)
-     * * 5: Botun Sahipleri (config.json)
+     * * 0: Everyone
+     * * 1: Manage Messages
+     * * 2: Manage Channels and Roles
+     * * 3: Ban Kick
+     * * 4: ADMINSTRATORS
+     * * 5: Owner of the bots (config.json)
      */
     permLevel: 0,
     cooldown: {
         enable: true, //? true false
-        timeout: 90, //? SANİYE | Seconds
-        type: "user", //? "any", "guild", "user", "member"
-        errormsg: "{time} beklemelisin.",
+        timeout: 90, //? Seconds
+        type: "user", //? "any", "guild", "user" or "member"
+        errormsg: "You should wait {time}.",
     },
-    //* Bekleme Süresi
-    //* enable: Açıksa true Kapalı İse False
-    //* timeout: kaç saniye beklesinler
-    //* type: ne kadar kapsamlı olsun Kullanılabilir: "any" (heryerde) "guild" (sunucu başına) "user" (kullanıcı başına) "member" (sunucudaki üye başına)
-    //! guildOnly kapalı ise "guild" ve "member" çalışmaz!!!!
-    //* errormsg: Hata Mesajı, {time} yazdığınız yere kalan bekleme süresi gelmektedir.
     help: {
         name: "Example",
         desc: "example description",
