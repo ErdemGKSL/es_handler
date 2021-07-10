@@ -5,9 +5,9 @@ module.exports = {
 	description: "shows up discord's ping",
 	options: [
 		{
+			type: 4, // 4 = Means Integer
 			name: "embed",
 			description: "would you like to have an embed?",
-			type: 4, // 4 = Means Integer
 			required: true,
 			choices: [
 				{
