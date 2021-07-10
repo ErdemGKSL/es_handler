@@ -149,7 +149,7 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 			if (member.hasPermission("BAN_MEMBERS" || "KICK_MEMBERS"))
 				permlvl = 3;
 			if (member.hasPermission("ADMINISTRATOR")) permlvl = 4;
-			if (owners.includes(i.author.id)) permlvl = 5;
+			if (owners.includes(author.id)) permlvl = 5;
 			if (command.permLevel > permlvl)
 				return respond(i, "Yetersiz Yetki!", 1);
 		}
