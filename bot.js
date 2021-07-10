@@ -162,7 +162,12 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 	} else {
 		author = await client.users.cache.get(i.user.id);
 	}
-
+	const obj = {
+		member: member,
+		guild: guild,
+		author: author,
+		channel: channel
+	};
 	let command = client.slashcommands.get(i.data.name);
 	if (command) {
 		if (command.workOnly) {
@@ -239,7 +244,7 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 		}
 		if (command.ignoreBots && author.bot) return;
 		try {
-			let msg = command.execute(i, client);
+			let msg = command.execute(i, client, obj);
 			if (msg) {
 				respond(i, msg);
 			}
