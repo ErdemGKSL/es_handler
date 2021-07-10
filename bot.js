@@ -14,17 +14,17 @@ client.commands = new Discord.Collection();
 client.prefix = prefix;
 const eventFiles = fs.readdirSync("./events").filter((x) => x.endsWith(".js"));
 if (eventFiles.length > 0) {
-	console.log(chalk.magenta.bold.underline("Events loading...") + "\n ");
+	console.log(chalk.magenta.bold.underline("Eventler yükleniyor...") + "\n ");
 }
 
 eventFiles.forEach((file) => {
 	const event = require(`./events/${file}`);
 	event.execute(client);
-	console.log(chalk.blueBright.italic(`> ${event.name} named Event loaded!`));
+	console.log(chalk.blueBright.italic(`> ${event.name} Eventi yüklendi!`));
 });
 client.on("ready", () => {
 	console.log(
-		chalk.green.bold(`Logged as ${client.user.tag}!`)
+		chalk.green.bold(`Giriş! ${client.user.tag}!`)
 	);
 });
 const incommandFiles = fs
@@ -42,7 +42,7 @@ incommandFiles.forEach((folder) => {
 	if (lcommandFiles.length > 0) {
 		console.log(
 			chalk.magenta.bold.underline(
-				`Loading commands from ${folder} folder...`
+				`${folder} Dosyasından Komutlar Yükleniyor...`
 			) + "\n "
 		);
 	}
@@ -50,7 +50,7 @@ incommandFiles.forEach((folder) => {
 		const command = require(`./commands/${folder}/${file}`);
 		let name = file.slice(0, file.length - 3);
 		client.commands.set(name, command);
-		console.log(chalk.blueBright.italic(`> ${name} named command Loaded!`));
+		console.log(chalk.blueBright.italic(`> ${name} Komutu yüklendi!`));
 	});
 });
 
