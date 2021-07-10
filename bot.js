@@ -52,6 +52,7 @@ incommandFiles.forEach((folder) => {
 		console.log(chalk.blueBright.italic(`> ${name} Komutu Yüklendi!`));
 	});
 });
+
 if (commandFiles.length > 0) {
 	console.log(chalk.magenta.bold.underline("Komutlar Yükleniyor...") + "\n ");
 }
