@@ -14,16 +14,17 @@ client.commands = new Discord.Collection();
 client.prefix = prefix;
 const eventFiles = fs.readdirSync("./events").filter((x) => x.endsWith(".js"));
 if (eventFiles.length > 0) {
-	console.log(chalk.magenta.bold.underline("Eventler Yükleniyor...") + "\n ");
+	console.log(chalk.magenta.bold.underline("Events loading...") + "\n ");
 }
+
 eventFiles.forEach((file) => {
 	const event = require(`./events/${file}`);
 	event.execute(client);
-	console.log(chalk.blueBright.italic(`> ${event.name} Eventi Yüklendi!`));
+	console.log(chalk.blueBright.italic(`> ${event.name} named Event loaded!`));
 });
 client.on("ready", () => {
 	console.log(
-		chalk.green.bold(`${client.user.tag} adlı bota giriş yapıldı!`)
+		chalk.green.bold(`Logged as ${client.user.tag}!`)
 	);
 });
 const incommandFiles = fs
@@ -41,7 +42,7 @@ incommandFiles.forEach((folder) => {
 	if (lcommandFiles.length > 0) {
 		console.log(
 			chalk.magenta.bold.underline(
-				`${folder} Dosyasından Komutlar Yükleniyor...`
+				`Loading commands from ${folder} folder...`
 			) + "\n "
 		);
 	}
@@ -49,18 +50,18 @@ incommandFiles.forEach((folder) => {
 		const command = require(`./commands/${folder}/${file}`);
 		let name = file.slice(0, file.length - 3);
 		client.commands.set(name, command);
-		console.log(chalk.blueBright.italic(`> ${name} Komutu Yüklendi!`));
+		console.log(chalk.blueBright.italic(`> ${name} named command Loaded!`));
 	});
 });
 
 if (commandFiles.length > 0) {
-	console.log(chalk.magenta.bold.underline("Komutlar Yükleniyor...") + "\n ");
+	console.log(chalk.magenta.bold.underline("Commands are loading...") + "\n ");
 }
 commandFiles.forEach((file) => {
 	const command = require(`./commands/${file}`);
 	let name = file.slice(0, file.length - 3);
 	client.commands.set(name, command);
-	console.log(chalk.blueBright.italic(`> ${name} Komutu Yüklendi!`));
+	console.log(chalk.blueBright.italic(`> ${name} named command Loaded!`));
 });
 
 client.slashcommands = new Discord.Collection();
@@ -72,7 +73,7 @@ setTimeout(async () => {
 
 	if (slashCommandFiles.length > 0) {
 		console.log(
-			chalk.magenta.bold.underline("Slash Komutları Yükleniyor...") +
+			chalk.magenta.bold.underline("Slash Commands are loading...") +
 				"\n "
 		);
 	}
@@ -88,7 +89,7 @@ setTimeout(async () => {
 		);
 		if (ocmd) {
 			console.log(
-				chalk.blueBright.italic(`> ${command.name} Komutu Yüklendi!`)
+				chalk.blueBright.italic(`> ${command.name} named command loaded!`)
 			);
 			return;
 		}
@@ -103,7 +104,7 @@ setTimeout(async () => {
 				ecmd.id
 			);
 			console.log(
-				chalk.blueBright.italic(`> ${command.name} Komutu Düzenlendi!`)
+				chalk.blueBright.italic(`> ${command.name} named command edited and loaded!`)
 			);
 			return;
 		}
@@ -114,11 +115,11 @@ setTimeout(async () => {
 					description: command.description,
 					options: command.options
 				})
-				.catch(command.name + " yüklenemedi!")
+				.catch(command.name + " named command can not be created!")
 				.then(() => {
 					console.log(
 						chalk.blueBright.italic(
-							`> ${command.name} Komutu Yaratıldı!`
+							`> ${command.name} named command created and loaded!`
 						)
 					);
 				});
@@ -128,11 +129,11 @@ setTimeout(async () => {
 					name: command.name,
 					description: command.description
 				})
-				.catch(command.name + " yüklenemedi!")
+				.catch(command.name + " named command can not be created!")
 				.then(() => {
 					console.log(
 						chalk.blueBright.italic(
-							`> ${command.name} Komutu Yaratıldı!`
+							`> ${command.name} named command created and loaded!`
 						)
 					);
 				});
@@ -145,7 +146,7 @@ setTimeout(async () => {
 		interclient.deleteCommand(cx.id);
 		console.log(
 			chalk.redBright(
-				"> " + cx.name + " komutu artık olmadığı için silindi."
+				"> " + cx.name + " command has been deleted from discord (because there isn't any command in my data)."
 			)
 		);
 	});
@@ -175,13 +176,13 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 			if (command.workOnly.toLowerCase() == "dm" && i.guild_id)
 				return respond(
 					i,
-					"Bu komut sadece DM'lerde kullanılmaz üzere tasarlanmıştır!",
+					"This is an dm only command!",
 					1
 				);
 			if (command.workOnly.toLowerCase() == "guild" && !i.guild_id)
 				return respond(
 					i,
-					"Bu komut sadece sunucularda kullanılabilir!",
+					"This command can only be used in guilds!",
 					1
 				);
 		}
@@ -200,7 +201,7 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 			if (member.hasPermission("ADMINISTRATOR")) permlvl = 4;
 			if (owners.includes(author.id)) permlvl = 5;
 			if (command.permLevel > permlvl)
-				return respond(i, "Yetersiz Yetki!", 1);
+				return respond(i, "Unsufficent Permission!", 1);
 		}
 
 		if (command.cooldown && command.cooldown.enable) {
@@ -225,7 +226,7 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 				let kalan = u.okunur_zaman(wait - (d - cooldown.get(cnm)));
 				if (command.cooldown.errormsg) {
 					if (command.cooldown.errormsg === "") {
-						respond(i, `Komut Bekleme Süresinde... ${kalan}`, 1);
+						respond(i, `Please wait... ${kalan}`, 1);
 					} else {
 						let emsg = command.cooldown.errormsg.replace(
 							"{time}",
@@ -251,7 +252,7 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 			}
 		} catch (e) {
 			console.error(e);
-			respond(i, "Bir hata oluştu!", 1);
+			respond(i, "There is an error going on please check logs if you can!", 1);
 		}
 	}
 });
@@ -280,11 +281,11 @@ client.on("message", (msg) => {
 		if (command.workOnly) {
 			if (command.workOnly.toLowerCase() == "dm" && msg.guild)
 				return msg.lineReply(
-					"Bu komut sadece DM'lerde kullanılmaz üzere tasarlanmıştır!"
+					"This is an dm only command!"
 				);
 			if (command.workOnly.toLowerCase() == "guild" && !msg.guild)
 				return msg.lineReply(
-					"Bu komut sadece sunucularda kullanılabilir!"
+					"Please use this command in guilds."
 				);
 		}
 		if (command.workOnly.toLowerCase() == "guild" && command.permLevel) {
@@ -302,7 +303,7 @@ client.on("message", (msg) => {
 			if (msg.member.hasPermission("ADMINISTRATOR")) permlvl = 4;
 			if (owners.includes(msg.author.id)) permlvl = 5;
 			if (command.permLevel > permlvl)
-				return msg.lineReply("Yetersiz Yetki!");
+				return msg.lineReply("Insufficent Permission");
 		}
 		if (command.cooldown && command.cooldown.enable) {
 			let cnm = command.trigger + msg.author.id;
@@ -326,7 +327,7 @@ client.on("message", (msg) => {
 				let kalan = u.okunur_zaman(wait - (d - cooldown.get(cnm)));
 				if (command.cooldown.errormsg) {
 					if (command.cooldown.errormsg === "") {
-						msg.lineReply(`Komut Bekleme Süresinde... ${kalan}`);
+						msg.lineReply(`Please wait... ${kalan}`);
 					} else {
 						let emsg = command.cooldown.errormsg.replace(
 							"{time}",
@@ -360,8 +361,56 @@ client.on("message", (msg) => {
 			command.execute(msg, args, client);
 		} catch (e) {
 			console.error(e);
-			msg.lineReply("Bir hata oluştu!");
+			msg.lineReply("There is an error going on please check logs!");
 		}
 	});
 });
+
 client.login(token);
+
+
+function respond(i, msg, id) {
+	if (id) {
+		if (typeof msg === "string") {
+			client.api.interactions(i.id, i.token).callback.post({
+				data: {
+					type: 4,
+					data: {
+						content: msg,
+						flags: id
+					}
+				}
+			});
+		} else if (msg) {
+			client.api.interactions(i.id, i.token).callback.post({
+				data: {
+					type: 4,
+					data: {
+						embeds: [msg],
+						flags: id
+					}
+				}
+			});
+		}
+	} else {
+		if (typeof msg === "string") {
+			client.api.interactions(i.id, i.token).callback.post({
+				data: {
+					type: 4,
+					data: {
+						content: msg
+					}
+				}
+			});
+		} else if (msg) {
+			client.api.interactions(i.id, i.token).callback.post({
+				data: {
+					type: 4,
+					data: {
+						embeds: [msg]
+					}
+				}
+			});
+		}
+	}
+}
