@@ -13,6 +13,7 @@
         "discord-reply": "^0.1.2",
         "discord.js": "^12.5.3",
         "fs": "0.0.1-security",
-        "humanize-duration": "^3.26.0"
+        "humanize-duration": "^3.26.0",
+        "discord-slash-commands-client": "^1.2.1"
     }
 }
