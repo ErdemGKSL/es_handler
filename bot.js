@@ -112,6 +112,7 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 	let author;
 	let guild;
 	let channel = client.channels.cache.get(i.channel_id);
+	
 	if (i.guild_id) {
 		guild = await client.guilds.cache.get(i.guild_id);
 		author = await client.users.cache.get(i.member.user.id);
