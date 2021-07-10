@@ -142,7 +142,11 @@ setTimeout(async () => {
 
 	await allx.forEach((cx) => {
 		interclient.deleteCommand(cx.id);
-		console.log(cx.name + " komutu artık olmadığı için silindi.");
+		console.log(
+			chalk.redBright(
+				"> " + cx.name + " komutu artık olmadığı için silindi."
+			)
+		);
 	});
 }, 30);
 client.ws.on("INTERACTION_CREATE", async (i) => {
