@@ -52,7 +52,7 @@ module.exports = {
 	/**
 	 * @param {Discord.Client} client
 	 */
-	execute(i, client) {
+	execute(i, client, obj) {
 		const dping = client.ws.ping;
 		let data = i.data.options.find((d) => d.name == "embed");
 		if (data.value) {
