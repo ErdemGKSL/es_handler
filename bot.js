@@ -64,49 +64,87 @@ commandFiles.forEach((file) => {
 
 client.slashcommands = new Discord.Collection();
 
-const slashCommandFiles = fs
-	.readdirSync("./slashcommands")
-	.filter((x) => x.endsWith(".js"));
+setTimeout(async () => {
+	const slashCommandFiles = fs
+		.readdirSync("./slashcommands")
+		.filter((x) => x.endsWith(".js"));
 
-if (slashCommandFiles.length > 0) {
-	console.log(
-		chalk.magenta.bold.underline("Slash Komutları Yükleniyor...") + "\n "
-	);
-}
-slashCommandFiles.forEach((file) => {
-	const command = require(`./slashcommands/${file}`);
-	client.slashcommands.set(command.name, command);
-	if (command.options) {
-		interclient
-			.createCommand({
-				name: command.name,
-				description: command.description,
-				options: command.options
-			})
-			.catch(command.name + " yüklenemedi!")
-			.then(() => {
-				console.log(
-					chalk.blueBright.italic(
-						`> ${command.name} Komutu Yüklendi!`
-					)
-				);
-			});
-	} else {
-		interclient
-			.createCommand({
-				name: command.name,
-				description: command.description
-			})
-			.catch(command.name + " yüklenemedi!")
-			.then(() => {
-				console.log(
-					chalk.blueBright.italic(
-						`> ${command.name} Komutu Yüklendi!`
-					)
-				);
-			});
+	if (slashCommandFiles.length > 0) {
+		console.log(
+			chalk.magenta.bold.underline("Slash Komutları Yükleniyor...") +
+				"\n "
+		);
 	}
-});
+	let all = await interclient.getCommands({});
+	await slashCommandFiles.forEach((file) => {
+		const command = require(`./slashcommands/${file}`);
+		client.slashcommands.set(command.name, command);
+		let ocmd = all.find(
+			(ck) =>
+				ck.name == command.name &&
+				JSON.stringify(ck.options) == JSON.stringify(command.options) &&
+				ck.description == command.description
+		);
+		if (ocmd) {
+			console.log(
+				chalk.blueBright.italic(`> ${command.name} Komutu Yüklendi!`)
+			);
+			return;
+		}
+		let ecmd = all.find((ck) => ck.name == command.name);
+		if (ecmd) {
+			interclient.editCommand(
+				{
+					name: command.name,
+					description: command.description,
+					options: command.options ? command.options : undefined
+				},
+				ecmd.id
+			);
+			console.log(
+				chalk.blueBright.italic(`> ${command.name} Komutu Düzenlendi!`)
+			);
+			return;
+		}
+		if (command.options) {
+			interclient
+				.createCommand({
+					name: command.name,
+					description: command.description,
+					options: command.options
+				})
+				.catch(command.name + " yüklenemedi!")
+				.then(() => {
+					console.log(
+						chalk.blueBright.italic(
+							`> ${command.name} Komutu Yaratıldı!`
+						)
+					);
+				});
+		} else {
+			interclient
+				.createCommand({
+					name: command.name,
+					description: command.description
+				})
+				.catch(command.name + " yüklenemedi!")
+				.then(() => {
+					console.log(
+						chalk.blueBright.italic(
+							`> ${command.name} Komutu Yaratıldı!`
+						)
+					);
+				});
+		}
+	});
+	let names = await client.slashcommands.map((command) => command.name);
+	let allx = await all.filter((c) => !names.includes(c.name));
+
+	await allx.forEach((cx) => {
+		interclient.deleteCommand(cx.id);
+		console.log(cx.name + " komutu artık olmadığı için silindi.");
+	});
+}, 30);
 client.ws.on("INTERACTION_CREATE", async (i) => {
 	let member;
 	let author;
