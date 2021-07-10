@@ -51,6 +51,11 @@ module.exports = {
 
 	/**
 	 * @param {Discord.Client} client
+	 * @param {Object} obj
+	 * @param {Discord.User} obj.author
+	 * @param {Discord.GuildMember} obj.member
+	 * @param {Discord.Guild} obj.guild
+	 * @param {Discord.TextChannel} obj.channel
 	 */
 	execute(i, client, obj) {
 		const dping = client.ws.ping;
