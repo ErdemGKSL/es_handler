@@ -3,52 +3,35 @@ const u = require("../utils.js");
 module.exports = {
 	name: "ping",
 	//? İsmi
-	description: "pingini söyler",
+	description: "shows up discord's ping",
 	//? Açıklama
 	options: [
 		{
 			name: "embed",
-			description: "embedli mi olsun?",
-			type: 4, // 4 = Sayı demek
+			description: "would you like to have an embed?",
+			type: 4, // 4 = Means Integer
 			required: true,
 			choices: [
 				{
-					name: "Olsun",
+					name: "YES",
 					value: 1
 				},
 				{
-					name: "Olmasın",
+					name: "no",
 					value: 0
 				}
 			]
 		}
 	],
-	//? Eğer Tetiklenme tipi "command" ise ana komut dışındaki tetiklenmeler.
-	workOnly: "all", //? "guild" , "dm" , "all"
-	//? Sadece Sunucularda'mı Çalışsın
-	ignoreBots: true, //?Botlar umursanmasın mı
-	/**
-	 * * 0: Herkes
-	 * * 1: Alt Yetkililer (Mesajları yönet vb.)
-	 * * 2: Orta Yetkililer (Kanalları veya Rolleri yönet vb.)
-	 * * 3: Üst Yetkililer (BAN veya KICK)
-	 * * 4: Yöneticiler (ADMINSTRATORS)
-	 * * 5: Botun Sahipleri (config.json)
-	 */
+-	workOnly: "all", //? "guild" , "dm" , "all"
+-	ignoreBots: true, 
 	permLevel: 0,
 	cooldown: {
 		enable: true, //? true false
-		timeout: 90, //? SANİYE | Seconds
+		timeout: 90, //? Seconds
 		type: "user", //? "any", "guild", "user", "member"
-		errormsg: "Bi dur la {time} bekler misin kardeş"
+		errormsg: "please wait {time} brother..."
 	},
-	//* Bekleme Süresi
-	//* enable: Açıksa true Kapalı İse False
-	//* timeout: kaç saniye beklesinler
-	//* type: ne kadar kapsamlı olsun Kullanılabilir: "any" (heryerde) "guild" (sunucu başına) "user" (kullanıcı başına) "member" (sunucudaki üye başına)
-	//! guildOnly kapalı ise "guild" ve "member" çalışmaz!!!!
-	//* errormsg: Hata Mesajı, {time} yazdığınız yere kalan bekleme süresi gelmektedir.
-
 	/**
 	 * @param {Discord.Client} client
 	 * @param {Object} obj
@@ -62,10 +45,10 @@ module.exports = {
 		let data = i.data.options.find((d) => d.name == "embed");
 		if (data.value) {
 			return u.embed({
-				desc: `Discordun pingi: ${dping}`
+				desc: `Discord's ping: ${dping}`
 			});
 		} else {
-			return `Discordun pingi: ${dping}`;
+			return `Discord's ping: ${dping}`;
 		}
 	}
 };
