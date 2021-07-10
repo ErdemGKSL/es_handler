@@ -2,40 +2,21 @@ const Discord = require("discord.js");
 const u = require("../utils.js");
 module.exports = {
     trigger: "ping",
-    //? Tetiklenme İçeriği
     type: "command",
-    //? Komutun Tetiklenme Tipi, Kullanılabilir: "regex" "contains" "end" "start" "exact" "command" "always"
     aliases: ["p"],
-    //? Eğer Tetiklenme tipi "command" ise ana komut dışındaki tetiklenmeler.
     workOnly: "all", //? "guild" , "dm" , "all"
-    //? Sadece Sunucularda'mı Çalışsın
-    ignoreBots: true, //?Botlar umursanmasın mı
-    /**
-     * * 0: Herkes
-     * * 1: Alt Yetkililer (Mesajları yönet vb.)
-     * * 2: Orta Yetkililer (Kanalları veya Rolleri yönet vb.)
-     * * 3: Üst Yetkililer (BAN veya KICK)
-     * * 4: Yöneticiler (ADMINSTRATORS)
-     * * 5: Botun Sahipleri (config.json)
-     */
+    ignoreBots: true, 
     permLevel: 0,
     cooldown: {
         enable: true, //? true false
-        timeout: 90, //? SANİYE | Seconds
+        timeout: 90, //?  Seconds
         type: "user", //? "any", "guild", "user", "member"
-        errormsg: "Bi dur la {time} bekler misin kardeş",
+        errormsg: "Please wait {time}",
     },
-    //* Bekleme Süresi
-    //* enable: Açıksa true Kapalı İse False
-    //* timeout: kaç saniye beklesinler
-    //* type: ne kadar kapsamlı olsun Kullanılabilir: "any" (heryerde) "guild" (sunucu başına) "user" (kullanıcı başına) "member" (sunucudaki üye başına)
-    //! guildOnly kapalı ise "guild" ve "member" çalışmaz!!!!
-    //* errormsg: Hata Mesajı, {time} yazdığınız yere kalan bekleme süresi gelmektedir.
     help: {
         name: "Ping",
-        desc: "Botun ve discordun mevcut gecikmesini alır ve size iletir.",
+        desc: "Shows discords and bots ping!",
     },
-    //* Yardım Komutu İçin İsim ve Açıklama
     /**
      * @param {Discord.Message} msg
      * @param {string[]} args
@@ -47,8 +28,8 @@ module.exports = {
         msg.channel
             .send(
                 u.embed({
-                    title: "Gecikme Ölçümü",
-                    desc: "Acaba pingim kaç hadi bakalım 🤔",
+                    title: "Pingmeter",
+                    desc: "Here is my ping... 🤔",
                 })
             )
             .then((x) => {
@@ -56,8 +37,8 @@ module.exports = {
                 setTimeout(() => {
                     x.edit(
                         u.embed({
-                            title: "Gecikme Ölçümü",
-                            desc: `Discord'un Pingi: ${dping} ms\nBot'un Pingi: ${bping} ms`,
+                            title: "Pingmeter",
+                            desc: `Discord's Ping: ${dping} ms\nBot's Ping: ${bping} ms`,
                         })
                     );
                 }, 500);
