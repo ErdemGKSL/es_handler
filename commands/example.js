@@ -28,7 +28,7 @@ module.exports = {
         name: "Example",
         desc: "example description",
     },
-    //* Yardım Komutu İçin İsim ve Açıklama
+    //* Name and description for help command
     /**
      * @param {Discord.Message} msg
      * @param {string[]} args
