@@ -177,13 +177,13 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 				return respond(
 					i,
 					"Bu komut sadece DM'lerde kullanılmaz üzere tasarlanmıştır!",
-					1
+					64
 				);
 			if (command.workOnly.toLowerCase() == "guild" && !i.guild_id)
 				return respond(
 					i,
 					"Bu komut sadece sunucularda kullanılabilir!",
-					1
+					64
 				);
 		}
 		if (command.workOnly.toLowerCase() == "guild" && command.permLevel) {
@@ -201,7 +201,7 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 			if (member.hasPermission("ADMINISTRATOR")) permlvl = 4;
 			if (owners.includes(author.id)) permlvl = 5;
 			if (command.permLevel > permlvl)
-				return respond(i, "Yetersiz Yetki!", 1);
+				return respond(i, "Yetersiz Yetki!", 64);
 		}
 
 		if (command.cooldown && command.cooldown.enable) {
@@ -226,13 +226,13 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 				let kalan = u.okunur_zaman(wait - (d - cooldown.get(cnm)));
 				if (command.cooldown.errormsg) {
 					if (command.cooldown.errormsg === "") {
-						respond(i, `Komut Bekleme Süresinde... ${kalan}`, 1);
+						respond(i, `Komut Bekleme Süresinde... ${kalan}`, 64);
 					} else {
 						let emsg = command.cooldown.errormsg.replace(
 							"{time}",
 							kalan
 						);
-						respond(i, emsg, 1);
+						respond(i, emsg, 64);
 					}
 				}
 				return;
@@ -252,7 +252,7 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 			}
 		} catch (e) {
 			console.error(e);
-			respond(i, "Bir hata oluştu!", 1);
+			respond(i, "Bir hata oluştu!", 64);
 		}
 	}
 });
