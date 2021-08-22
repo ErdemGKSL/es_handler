@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const { token, prefix, owners, bot_id } = require("./config.json");
 const { Client } = require("discord-slash-commands-client");
 const interclient = new Client(token, bot_id);
+const prompt = require("prompt-sync")();
 require("discord-reply");
 const client = new Discord.Client();
 const fs = require("fs");
@@ -11,6 +12,21 @@ const { embed } = require("./utils.js");
 const cooldown = new Discord.Collection();
 
 client.commands = new Discord.Collection();
+client.consolecommands = new Discord.Collection();
+const consoleFiles = fs
+	.readdirSync("./consolecommands")
+	.filter((x) => x.endsWith(".js"));
+if (consoleFiles.length > 0) {
+	console.log(
+		chalk.magenta.bold.underline("Konsol Komutları yükleniyor...") + "\n "
+	);
+}
+consoleFiles.forEach((file) => {
+	const command = require(`./consolecommands/${file}`);
+	let name = file.slice(0, file.length - 3);
+	client.consolecommands.set(name, command);
+	console.log(chalk.blueBright.italic(`> ${name} Konsol Komutu Yüklendi!`));
+});
 client.prefix = prefix;
 const eventFiles = fs.readdirSync("./events").filter((x) => x.endsWith(".js"));
 if (eventFiles.length > 0) {
@@ -22,11 +38,29 @@ eventFiles.forEach((file) => {
 	event.execute(client);
 	console.log(chalk.blueBright.italic(`> ${event.name} Eventi yüklendi!`));
 });
-client.on("ready", () => {
-	console.log(
-		chalk.green.bold(`Giriş! ${client.user.tag}!`)
-	);
+client.on("ready", async () => {
+	console.log(chalk.green.bold(`Giriş! ${client.user.tag}!`));
+	process.stdin.resume();
+	process.stdin.setEncoding("utf8");
+	process.stdout.write(">> ");
+	process.stdin.on("data", async function (message) {
+		if (message) {
+			const args = message.trim().split(/ +/);
+			const commandname = args.shift();
+			let cmdtrg = client.consolecommands.find(
+				(x) => x.name == commandname || x.aliases.includes(commandname)
+			);
+			if (cmdtrg) {
+				await cmdtrg.execute(commandname, args, client);
+			} else console.log("Uknown Command");
+		} else {
+			client.destroy();
+			process.exit();
+		}
+		process.stdout.write(">> ");
+	});
 });
+
 const incommandFiles = fs
 	.readdirSync("./commands")
 	.filter((x) => !x.includes("."));
@@ -156,7 +190,7 @@ client.ws.on("INTERACTION_CREATE", async (i) => {
 	let author;
 	let guild;
 	let channel = client.channels.cache.get(i.channel_id);
-	
+
 	if (i.guild_id) {
 		guild = await client.guilds.cache.get(i.guild_id);
 		author = await client.users.cache.get(i.member.user.id);
@@ -367,7 +401,6 @@ client.on("message", (msg) => {
 });
 
 client.login(token);
-
 
 function respond(i, msg, id) {
 	if (id) {
