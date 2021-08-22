@@ -2,7 +2,6 @@ const Discord = require("discord.js");
 const { token, prefix, owners, bot_id } = require("./config.json");
 const { Client } = require("discord-slash-commands-client");
 const interclient = new Client(token, bot_id);
-const prompt = require("prompt-sync")();
 require("discord-reply");
 const client = new Discord.Client();
 const fs = require("fs");
